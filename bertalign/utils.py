@@ -28,8 +28,8 @@ def split_sents(text, lang):
     if lang in LANG.SPLITTER:
         if lang == 'zh':
             sents = _split_zh(text)
-	if lang == "fa":
-	    sents = _split_fa(text)
+        if lang == "fa":
+            sents = _split_fa(text)
         else:
             splitter = SentenceSplitter(language=lang)
             sents = splitter.split(text=text) 
