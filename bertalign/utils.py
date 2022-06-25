@@ -70,7 +70,7 @@ def _split_fa(doc_string):
         doc_string = [x for x in doc_string if len(x) > 0]
         return doc_string
 
-    def add_tab(mystring):
+def add_tab(mystring):
         mystring = mystring.group()  # this method return the string matched by re
         mystring = mystring.strip(' ')  # ommiting the whitespace around the pucntuation
         mystring = mystring.strip('\n') # ommiting the newline around the pucntuation
