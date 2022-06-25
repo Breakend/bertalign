@@ -28,6 +28,8 @@ def split_sents(text, lang):
     if lang in LANG.SPLITTER:
         if lang == 'zh':
             sents = _split_zh(text)
+	if lang == "fa":
+	    sents = _split_fa(text)
         else:
             splitter = SentenceSplitter(language=lang)
             sents = splitter.split(text=text) 
@@ -35,7 +37,40 @@ def split_sents(text, lang):
         return sents
     else:
         raise Exception('The language {} is not suppored yet.'.format(LANG.ISO[lang]))
-    
+
+def _split_fa(doc_string):
+        pattern = r"[-+]?\d*\.\d+|\d+"
+        nums_list = re.findall(pattern, doc_string)
+        doc_string = re.sub(pattern, 'floatingpointnumber', doc_string)
+
+        pattern = r'([!\.\?؟]+)[\n]*'
+        tmp = re.findall(pattern, doc_string)
+        doc_string = re.sub(pattern, self.add_tab, doc_string)
+
+        pattern = r':\n'
+        tmp = re.findall(pattern, doc_string)
+        doc_string = re.sub(pattern, self.add_tab, doc_string)
+
+        pattern = r';\n'
+        tmp = re.findall(pattern, doc_string)
+        doc_string = re.sub(pattern, self.add_tab, doc_string)
+
+        pattern = r'؛\n'
+        tmp = re.findall(pattern, doc_string)
+        doc_string = re.sub(pattern, self.add_tab, doc_string)
+
+        pattern = r'[\n]+'
+        doc_string = re.sub(pattern, self.add_tab, doc_string)
+
+        for number in nums_list:
+            pattern = 'floatingpointnumber'
+            doc_string = re.sub(pattern, number, doc_string, 1)
+
+        doc_string = doc_string.split('\t\t')
+        doc_string = [x for x in doc_string if len(x) > 0]
+        return doc_string
+	
+	
 def _split_zh(text, limit=1000):
         sent_list = []
         text = re.sub('(?P<quotation_mark>([。？！](?![”’"\'）])))', r'\g<quotation_mark>\n', text)
