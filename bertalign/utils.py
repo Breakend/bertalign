@@ -127,6 +127,7 @@ class LANG:
         'hu': 'Hungarian',
         'is': 'Icelandic',
         'it': 'Italian',
+        'fa' : 'Persian',
         'lt': 'Lithuanian',
         'lv': 'Latvian',
         'no': 'Norwegian',
